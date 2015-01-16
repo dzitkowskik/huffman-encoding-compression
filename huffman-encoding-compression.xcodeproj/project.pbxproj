@@ -23,6 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F68135D1A69A69F00974BE1 /* structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = structures.h; sourceTree = "<group>"; };
 		9F78F4971A68184000FFA52B /* huffman-encoding-compression */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "huffman-encoding-compression"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F78F49A1A68184000FFA52B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				9F78F49A1A68184000FFA52B /* main.cpp */,
+				9F68135D1A69A69F00974BE1 /* structures.h */,
 			);
 			path = "huffman-encoding-compression";
 			sourceTree = "<group>";
@@ -232,6 +234,7 @@
 				9F78F4A01A68184000FFA52B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

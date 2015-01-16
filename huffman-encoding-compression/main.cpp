@@ -11,61 +11,28 @@
 #include <vector>
 #include <memory>
 #include <map>
-
-#define CHAR_NUM 256
+#include "structures.h"
 
 using namespace std;
 
-struct tree_t
+template<class T>
+void printVector(vector<T> vec)
 {
-    tree_t *left;
-    tree_t *right;
-    char character;
-    
-    tree_t()
+    for (auto it = vec.begin(); it != vec.end(); it++)
     {
-        left = nullptr;
-        right = nullptr;
+        cout << *it;
     }
-    tree_t(char _char):tree_t()
-    {
-        this->character = _char;
-    }
-    ~tree_t()
-    {
-        if(left != nullptr) delete left;
-        if(right != nullptr) delete right;
-    }
-    
-    bool isLeaf()
-    {
-        return left==nullptr && right==nullptr;
-    }
-};
+}
 
-struct elem_t
+void printCodes(map<char, vector<bool>> codes)
 {
-    tree_t *tree;
-    int frequency;
-    
-    elem_t()
+    for(auto it = codes.begin(); it != codes.end(); it++)
     {
-        tree = nullptr;
+        cout << "Char: " << it->first << " Code: ";
+        printVector(it->second);
+        cout << endl;
     }
-    elem_t(int _freq):elem_t()
-    {
-        this->frequency = _freq;
-    }
-    ~elem_t(){}
-};
-
-struct header_t
-{
-    char letters[CHAR_NUM];
-};
-
-string to_encode = "ADA ATE APPLE";
-
+}
 
 header_t createHuffmanHeader(string text)
 {
@@ -125,7 +92,6 @@ void generateCodes(tree_t *tree, vector<bool> code, map<char, vector<bool>>* cod
 {
     if(tree->left == NULL && tree->right == NULL)
     {
-        //std::cout << "Leaf Found: " << tree->symbol << "\t" << code << std::endl;
         codes->insert(pair<char, vector<bool>>(tree->character, code));
     }
     if(tree->left != NULL)
@@ -152,40 +118,52 @@ vector<bool> encode(map<char, vector<bool>> codes, string text)
     return result;
 }
 
-void printBoolVector(vector<bool> vec)
+vector<char> decode(tree_t* tree, vector<bool> code)
 {
-    for (auto it = vec.begin(); it != vec.end(); it++)
+    vector<char> result;
+    tree_t* temp = tree;
+    for(auto it = code.begin(); it != code.end(); it++)
     {
-        cout << *it;
+        if(*it)
+            temp = temp->right;
+        else
+            temp = temp->left;
+        if(temp->isLeaf())
+        {
+            result.push_back(temp->character);
+            temp = tree;
+        }
     }
+    return result;
 }
 
-void printCodes(map<char, vector<bool>> codes)
+int main(int argc, const char * argv[])
 {
-    for(auto it = codes.begin(); it != codes.end(); it++)
-    {
-        cout << "Char: " << it->first << " Code: ";
-        printBoolVector(it->second);
-        cout << endl;
-    }
-}
-
-int main(int argc, const char * argv[]) {
-    cout << "START!\n" << std::endl;
+    string to_encode = "ADA ATE APPLE";
     
+    // Create a header and tree
     header_t header = createHuffmanHeader(to_encode);
     shared_ptr<list<elem_t*>> list_ptr = createTreeList(header);
     elem_t* elem = createHuffmanTree(list_ptr);
+    
+    // Generate huffman codes
     map<char, vector<bool>> codes;
     vector<bool> code;
     generateCodes(elem->tree, code, &codes);
+    
+    // Encode using huffman algorithm
     std::vector<bool> encoded = encode(codes, to_encode);
-    cout << codes.size() << endl;
-    printBoolVector(encoded);
+    
+    cout << "Encoded text: " << endl;
+    printVector(encoded);
     cout << endl;
-    cout << encoded.size() << endl;
+    
+    // Decode using the same tree
+    std::vector<char> decoded = decode(elem->tree, encoded);
+    
+    cout << "Decoded text: " << endl;
+    printVector(decoded);
     cout << endl;
-    printCodes(codes);
     
     delete elem->tree;
     delete elem;
