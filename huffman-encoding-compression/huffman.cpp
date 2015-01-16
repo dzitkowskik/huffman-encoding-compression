@@ -6,14 +6,12 @@
 //  Copyright (c) 2015 Karol Dzitkowski. All rights reserved.
 //
 
+#include "huffman.h"
+
 #include <iostream>
 #include <list>
-#include <vector>
 #include <memory>
 #include <map>
-#include "structures.h"
-
-using namespace std;
 
 template<class T>
 void printVector(vector<T> vec)
@@ -107,7 +105,7 @@ void generateCodes(tree_t *tree, vector<bool> code, map<char, vector<bool>>* cod
     }
 }
 
-vector<bool> encode(map<char, vector<bool>> codes, string text)
+vector<bool> _encode(map<char, vector<bool>> codes, string text)
 {
     vector<bool> result;
     for(auto it = text.begin(); it != text.end(); it++)
@@ -118,7 +116,7 @@ vector<bool> encode(map<char, vector<bool>> codes, string text)
     return result;
 }
 
-vector<char> decode(tree_t* tree, vector<bool> code)
+vector<char> _decode(tree_t* tree, vector<bool> code)
 {
     vector<char> result;
     tree_t* temp = tree;
@@ -137,12 +135,10 @@ vector<char> decode(tree_t* tree, vector<bool> code)
     return result;
 }
 
-int main(int argc, const char * argv[])
+vector<bool> encode(string to_encode, header_t& header)
 {
-    string to_encode = "ADA ATE APPLE";
-    
     // Create a header and tree
-    header_t header = createHuffmanHeader(to_encode);
+    header = createHuffmanHeader(to_encode);
     shared_ptr<list<elem_t*>> list_ptr = createTreeList(header);
     elem_t* elem = createHuffmanTree(list_ptr);
     
@@ -152,20 +148,44 @@ int main(int argc, const char * argv[])
     generateCodes(elem->tree, code, &codes);
     
     // Encode using huffman algorithm
-    std::vector<bool> encoded = encode(codes, to_encode);
+    vector<bool> encoded = _encode(codes, to_encode);
+    
+    delete elem->tree;
+    delete elem;
+    
+    return encoded;
+}
+
+vector<char> decode(header_t header, vector<bool> to_decode)
+{
+    // Create a tree
+    shared_ptr<list<elem_t*>> list_ptr = createTreeList(header);
+    elem_t* elem = createHuffmanTree(list_ptr);
+    
+    // Decode using the same tree
+    std::vector<char> decoded = _decode(elem->tree, to_decode);
+    
+    delete elem->tree;
+    delete elem;
+    
+    return decoded;
+}
+
+int main(int argc, const char * argv[])
+{
+    string to_encode = "ADA ATE APPLE";
+    
+    header_t header;
+    vector<bool> encoded = encode(to_encode, header);
+    vector<char> decoded = decode(header, encoded);
     
     cout << "Encoded text: " << endl;
     printVector(encoded);
     cout << endl;
     
-    // Decode using the same tree
-    std::vector<char> decoded = decode(elem->tree, encoded);
-    
     cout << "Decoded text: " << endl;
     printVector(decoded);
     cout << endl;
     
-    delete elem->tree;
-    delete elem;
     return 0;
 }

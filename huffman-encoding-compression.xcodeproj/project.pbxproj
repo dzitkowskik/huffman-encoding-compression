@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F78F49B1A68184000FFA52B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F78F49A1A68184000FFA52B /* main.cpp */; };
+		9F78F49B1A68184000FFA52B /* huffman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F78F49A1A68184000FFA52B /* huffman.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +24,9 @@
 
 /* Begin PBXFileReference section */
 		9F68135D1A69A69F00974BE1 /* structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = structures.h; sourceTree = "<group>"; };
+		9F68135E1A69ACCD00974BE1 /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
 		9F78F4971A68184000FFA52B /* huffman-encoding-compression */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "huffman-encoding-compression"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F78F49A1A68184000FFA52B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9F78F49A1A68184000FFA52B /* huffman.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = huffman.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +59,9 @@
 		9F78F4991A68184000FFA52B /* huffman-encoding-compression */ = {
 			isa = PBXGroup;
 			children = (
-				9F78F49A1A68184000FFA52B /* main.cpp */,
+				9F78F49A1A68184000FFA52B /* huffman.cpp */,
 				9F68135D1A69A69F00974BE1 /* structures.h */,
+				9F68135E1A69ACCD00974BE1 /* huffman.h */,
 			);
 			path = "huffman-encoding-compression";
 			sourceTree = "<group>";
@@ -120,7 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F78F49B1A68184000FFA52B /* main.cpp in Sources */,
+				9F78F49B1A68184000FFA52B /* huffman.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
